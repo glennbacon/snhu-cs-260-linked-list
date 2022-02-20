@@ -13,20 +13,18 @@
 
 #include "CSVparser.hpp"
 
-using namespace std;
-
 //============================================================================
 // Global definitions visible to all methods and classes
 //============================================================================
 
 // forward declarations
-double strToDouble(string str, char ch);
+double strToDouble(std::string str, char ch);
 
 // define a structure to hold bid information
 struct Bid {
-  string bidId;  // unique identifier
-  string title;
-  string fund;
+  std::string bidId;  // unique identifier
+  std::string title;
+  std::string fund;
   double amount;
   Bid() { amount = 0.0; }
 };
@@ -66,8 +64,8 @@ class LinkedList {
   void Append(Bid bid);
   void Prepend(Bid bid);
   void PrintList();
-  void Remove(string bidId);
-  Bid Search(string bidId);
+  void Remove(std::string bidId);
+  Bid Search(std::string bidId);
   int Size();
 };
 
@@ -131,8 +129,8 @@ void LinkedList::PrintList() {
 
   // Loop over each node looking for a match
   while (current != nullptr) {
-    cout << current->bid.bidId << ": " << current->bid.title << " | "
-         << current->bid.amount << " | " << current->bid.fund << endl;
+    std::cout << current->bid.bidId << ": " << current->bid.title << " | "
+              << current->bid.amount << " | " << current->bid.fund << std::endl;
     current = current->next;
   }
 }
@@ -142,7 +140,7 @@ void LinkedList::PrintList() {
  *
  * @param bidId The bid id to remove from the list
  */
-void LinkedList::Remove(string bidId) {
+void LinkedList::Remove(std::string bidId) {
   // (6): Implement remove logic
   if (head != nullptr) {
     if (head->bid.bidId.compare(bidId) == 0) {
@@ -180,7 +178,7 @@ void LinkedList::Remove(string bidId) {
  *
  * @param bidId The bid id to search for
  */
-Bid LinkedList::Search(string bidId) {
+Bid LinkedList::Search(std::string bidId) {
   // (7): Implement search logic
   Node* current = head;
 
@@ -212,8 +210,8 @@ int LinkedList::Size() { return size; }
  * @param bid struct containing the bid info
  */
 void displayBid(Bid bid) {
-  cout << bid.bidId << ": " << bid.title << " | " << bid.amount << " | "
-       << bid.fund << endl;
+  std::cout << bid.bidId << ": " << bid.title << " | " << bid.amount << " | "
+            << bid.fund << std::endl;
   return;
 }
 
@@ -225,20 +223,20 @@ void displayBid(Bid bid) {
 Bid getBid() {
   Bid bid;
 
-  cout << "Enter Id: ";
-  cin.ignore();
-  getline(cin, bid.bidId);
+  std::cout << "Enter Id: ";
+  std::cin.ignore();
+  getline(std::cin, bid.bidId);
 
-  cout << "Enter title: ";
-  getline(cin, bid.title);
+  std::cout << "Enter title: ";
+  std::getline(std::cin, bid.title);
 
-  cout << "Enter fund: ";
-  cin >> bid.fund;
+  std::cout << "Enter fund: ";
+  std::cin >> bid.fund;
 
-  cout << "Enter amount: ";
-  cin.ignore();
-  string strAmount;
-  getline(cin, strAmount);
+  std::cout << "Enter amount: ";
+  std::cin.ignore();
+  std::string strAmount;
+  std::getline(std::cin, strAmount);
   bid.amount = strToDouble(strAmount, '$');
 
   return bid;
@@ -249,8 +247,8 @@ Bid getBid() {
  *
  * @return a LinkedList containing all the bids read
  */
-void loadBids(string csvPath, LinkedList* list) {
-  cout << "Loading CSV file " << csvPath << endl;
+void loadBids(std::string csvPath, LinkedList* list) {
+  std::cout << "Loading CSV file " << csvPath << std::endl;
 
   // initialize the CSV Parser
   csv::Parser file = csv::Parser(csvPath);
@@ -284,7 +282,7 @@ void loadBids(string csvPath, LinkedList* list) {
  *
  * @param ch The character to strip out
  */
-double strToDouble(string str, char ch) {
+double strToDouble(std::string str, char ch) {
   str.erase(remove(str.begin(), str.end(), ch), str.end());
   return atof(str.c_str());
 }
@@ -297,7 +295,7 @@ double strToDouble(string str, char ch) {
  */
 int main(int argc, char* argv[]) {
   // process command line arguments
-  string csvPath, bidKey;
+  std::string csvPath, bidKey;
   switch (argc) {
     case 2:
       csvPath = argv[1];
@@ -320,16 +318,16 @@ int main(int argc, char* argv[]) {
 
   int choice = 0;
   while (choice != 9) {
-    cout << "Menu:" << endl;
-    cout << "  1. Enter a Bid" << endl;
-    cout << "  2. Load Bids" << endl;
-    cout << "  3. Display All Bids" << endl;
-    cout << "  4. Find Bid" << endl;
-    cout << "  5. Remove Bid" << endl;
-    cout << "  6. Prepend a Bid" << endl;
-    cout << "  9. Exit" << endl;
-    cout << "Enter choice: ";
-    cin >> choice;
+    std::cout << "Menu:" << std::endl;
+    std::cout << "  1. Enter a Bid" << std::endl;
+    std::cout << "  2. Load Bids" << std::endl;
+    std::cout << "  3. Display All Bids" << std::endl;
+    std::cout << "  4. Find Bid" << std::endl;
+    std::cout << "  5. Remove Bid" << std::endl;
+    std::cout << "  6. Prepend a Bid" << std::endl;
+    std::cout << "  9. Exit" << std::endl;
+    std::cout << "Enter choice: ";
+    std::cin >> choice;
 
     switch (choice) {
       case 1:
@@ -344,12 +342,13 @@ int main(int argc, char* argv[]) {
 
         loadBids(csvPath, &bidList);
 
-        cout << bidList.Size() << " bids read" << endl;
+        std::cout << bidList.Size() << " bids read" << std::endl;
 
         ticks =
             clock() - ticks;  // current clock ticks minus starting clock ticks
-        cout << "time: " << ticks << " milliseconds" << endl;
-        cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds" << endl;
+        std::cout << "time: " << ticks << " milliseconds" << std::endl;
+        std::cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds"
+                  << std::endl;
 
         break;
 
@@ -359,8 +358,8 @@ int main(int argc, char* argv[]) {
         break;
 
       case 4:
-        cout << "Enter Bid Id: ";
-        cin >> bidKey;
+        std::cout << "Enter Bid Id: ";
+        std::cin >> bidKey;
         ticks = clock();
 
         bid = bidList.Search(bidKey);
@@ -369,14 +368,15 @@ int main(int argc, char* argv[]) {
             clock() - ticks;  // current clock ticks minus starting clock ticks
 
         if (!bid.bidId.empty()) {
-          cout << "Bid Id " << bidKey << " found." << endl;
+          std::cout << "Bid Id " << bidKey << " found." << std::endl;
           displayBid(bid);
         } else {
-          cout << "Bid Id " << bidKey << " not found." << endl;
+          std::cout << "Bid Id " << bidKey << " not found." << std::endl;
         }
 
-        cout << "time: " << ticks << " clock ticks" << endl;
-        cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds" << endl;
+        std::cout << "time: " << ticks << " clock ticks" << std::endl;
+        std::cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds"
+                  << std::endl;
 
         break;
 
@@ -394,7 +394,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  cout << "Good bye." << endl;
+  std::cout << "Good bye." << std::endl;
 
   return 0;
 }
