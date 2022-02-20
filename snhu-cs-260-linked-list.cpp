@@ -101,6 +101,7 @@ void LinkedList::Append(Bid bid) {
   // new node is always the tail
   tail = node;
 
+  // Increment linked list size
   size++;
 }
 
@@ -118,6 +119,7 @@ void LinkedList::Prepend(Bid bid) {
   // New node is always tail
   head = node;
 
+  // Increment linked list size
   size++;
 }
 
@@ -142,30 +144,22 @@ void LinkedList::PrintList() {
  * @param bidId The bid id to remove from the list
  */
 void LinkedList::Remove(std::string bidId) {
-  // (6): Implement remove logic
-  if (head != nullptr) {
-    if (head->bid.bidId.compare(bidId) == 0) {
-      // save the next node (one to be removed)
-      Node* tempNode = head->next;
-      delete head;
-      head = tempNode;
-    }
-  }
   Node* current = head;
 
+  // (6): Implement remove logic
   // Loop over each node looking for a match
-  while (current->next != nullptr) {
-    if (current->bid.bidId.compare(bidId) == 0) {
-      // save the next node (one to be removed)
-      Node* tempNode = current->next;
+  while (current->next != nullptr && size > 1) {
+    if (current->next->bid.bidId == bidId) {
+      // Node is tail, update tail
+      if (current->next->next == nullptr) {
+        current->next = nullptr;
+        tail = current;
+      } else {
+        // make current node point beyond the next one (to be removed)
+        current->next = current->next->next;
+      }
 
-      // make current node point beyond the next one (to be removed)
-      current->next = tempNode->next;
-
-      // now delete the temp node
-      delete tempNode;
-
-      // reduce count
+      // Decrement linked list size
       size--;
 
       return;
@@ -355,7 +349,7 @@ int main(int argc, char* argv[]) {
 
       case 3:
         bidList.PrintList();
-
+        std::cout << bidList.Size() << " bids read" << std::endl;
         break;
 
       case 4:
@@ -382,6 +376,8 @@ int main(int argc, char* argv[]) {
         break;
 
       case 5:
+        std::cout << "Enter Bid Id: ";
+        std::cin >> bidKey;
         bidList.Remove(bidKey);
 
         break;
