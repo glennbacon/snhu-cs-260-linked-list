@@ -149,7 +149,7 @@ void LinkedList::Remove(std::string bidId) {
   // (6): Implement remove logic
   // Loop over each node looking for a match
   while (current->next != nullptr && size > 1) {
-    if (current->next->bid.bidId == bidId) {
+    if (current->next->bid.bidId.compare(bidId) == 0) {
       // Node is tail, update tail
       if (current->next->next == nullptr) {
         current->next = nullptr;
