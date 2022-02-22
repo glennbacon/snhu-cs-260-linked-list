@@ -233,7 +233,7 @@ Bid getBid() {
   std::getline(std::cin, bid.title);
 
   std::cout << "Enter fund: ";
-  std::cin >> bid.fund;
+  std::getline(std::cin, bid.title);
 
   std::cout << "Enter amount: ";
   std::cin.ignore();
