@@ -234,7 +234,7 @@ Bid getBid() {
   std::getline(std::cin, bid.title);
 
   std::cout << "Enter fund: ";
-  std::getline(std::cin, bid.title);
+  std::getline(std::cin, bid.fund);
 
   std::cout << "Enter amount: ";
   std::getline(std::cin, strAmount);
