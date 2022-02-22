@@ -224,6 +224,7 @@ void displayBid(Bid bid) {
  */
 Bid getBid() {
   Bid bid;
+  std::string strAmount;
 
   std::cout << "Enter Id: ";
   std::cin.ignore();
@@ -236,7 +237,6 @@ Bid getBid() {
   std::getline(std::cin, bid.title);
 
   std::cout << "Enter amount: ";
-  std::string strAmount;
   std::getline(std::cin, strAmount);
   bid.amount = strToDouble(strAmount, '$');
 
