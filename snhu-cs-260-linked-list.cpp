@@ -147,24 +147,31 @@ void LinkedList::Remove(std::string bidId) {
   Node* current = head;
 
   // (6): Implement remove logic
-  // Loop over each node looking for a match
-  while (current->next != nullptr && size > 1) {
-    if (current->next->bid.bidId.compare(bidId) == 0) {
-      // Node is tail, update tail
-      if (current->next->next == nullptr) {
-        current->next = nullptr;
-        tail = current;
-      } else {
-        // make current node point beyond the next one (to be removed)
-        current->next = current->next->next;
-      }
-
-      // Decrement linked list size
-      size--;
-
-      return;
+  // Only one node
+  if (size == 1) {
+    if (current->bid.bidId.compare(bidId) == 0) {
+      current->next = head = tail = nullptr;
+      size = 0;
     }
-    current = current->next;
+  } else {
+    // Loop over each node looking for a match
+    while (current->next != nullptr && size > 1) {
+      if (current->next->bid.bidId.compare(bidId) == 0) {
+        // Node is tail, update tail
+        if (current->next->next == nullptr) {
+          current->next = tail = nullptr;
+        } else {
+          // make current node point beyond the next one (to be removed)
+          current->next = current->next->next;
+        }
+
+        // Decrement linked list size
+        size--;
+
+        return;
+      }
+      current = current->next;
+    }
   }
 }
 
